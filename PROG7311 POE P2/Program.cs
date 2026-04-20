@@ -1,7 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using PROG7311_POE_P2.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

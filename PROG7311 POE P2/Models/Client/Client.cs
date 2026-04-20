@@ -1,4 +1,6 @@
-﻿namespace PROG7311_POE_P2.Models.Client
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PROG7311_POE_P2.Models.Client
 {
     public class Client
     {
