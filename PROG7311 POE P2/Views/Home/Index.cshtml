@@ -1,8 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<PROG7311_POE_P2.Models.Client.Client>
+
+@{
+    ViewData["Title"] = "Client Management";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Registered Clients</h2>
+        <a class="btn btn-success" asp-action="Create">Add new Client</a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-striped table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Client Name</th>
+                        <th>Contact Details</th>
+                        <th>Region</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var client in Model)
+                        {
+                            <tr>
+                                <td>@client.ClientId</td>
+                                <td><strong>@client.Name</strong></td>
+                                <td>@client.contactDetails</td>
+                                <td>
+                                    <span class="badge bg-info text-dark">@client.Region</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">Edit</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center">No client records found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
