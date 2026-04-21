@@ -8,7 +8,12 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connectionString));
 
+// currency service
+builder.Services.AddHttpClient<PROG7311_POE_P2.Services.CurrencyService>();
+
+// to config the application
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

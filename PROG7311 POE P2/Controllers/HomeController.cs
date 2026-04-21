@@ -6,6 +6,7 @@ using PROG7311_POE_P2.Models.Contract;
 using PROG7311_POE_P2.Models.ServiceRequest;
 using PROG7311_POE_P2.Models.DashboardViewModel;
 using System.Diagnostics;
+using PROG7311_POE_P2.Services;
 
 namespace PROG7311_POE_P2.Controllers
 {
@@ -13,14 +14,16 @@ namespace PROG7311_POE_P2.Controllers
     {
         private readonly ApplicationDBContext _context;
         private readonly ILogger<HomeController> _logger;
+        private readonly CurrencyService _currencyService;
 
         //================================================================
         // DB Context and Logger
         //================================================================
-        public HomeController(ILogger<HomeController> logger, ApplicationDBContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDBContext context, CurrencyService currencyService)
         {
             _logger = logger;
             _context = context;
+            _currencyService = currencyService;
         }
 
         //================================================================
@@ -96,8 +99,12 @@ namespace PROG7311_POE_P2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateServiceRequest(ServiceRequest serviceRequest)
+        public async Task<IActionResult> CreateServiceRequest(ServiceRequest serviceRequest, decimal amountInUSD)
         {
+           decimal randAmount = await _currencyService.ConvertUsdToZar(amountInUSD);
+
+            serviceRequest.Cost = randAmount;
+
             if (ModelState.IsValid)
             {
                 _context.ServiceRequests.Add(serviceRequest);
@@ -106,6 +113,20 @@ namespace PROG7311_POE_P2.Controllers
             }
             return View(serviceRequest);
         }
+
+
+        //public IActionResult CreateServiceRequest(ServiceRequest serviceRequest)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.ServiceRequests.Add(serviceRequest);
+        //        _context.SaveChanges();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(serviceRequest);
+        //}
+
+
 
         //================================================================
         // PRIVIACY
