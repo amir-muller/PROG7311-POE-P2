@@ -48,17 +48,15 @@ namespace PROG7311_POE_P2.Controllers
         //}
 
         //================================================================
-        // CREATE
+        // CREATE CLIENT   
         //================================================================
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
+        public IActionResult CreateClient() => View();
+      
+        // post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Client client)
+        public IActionResult CreateClient(Client client)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +65,46 @@ namespace PROG7311_POE_P2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(client);
+        }
+
+        //================================================================
+        // CREATE CONTRACT
+        //================================================================
+
+        [HttpGet]
+        public IActionResult CreateContract() => View();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateContract(Contract contract)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Contracts.Add(contract);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(contract);
+        }
+
+        //================================================================
+        // CREATE SERVICE REQUEST
+        //================================================================
+
+        [HttpGet]
+        public IActionResult CreateServiceRequest() => View();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateServiceRequest(ServiceRequest serviceRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.ServiceRequests.Add(serviceRequest);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(serviceRequest);
         }
 
         //================================================================
@@ -85,11 +123,7 @@ namespace PROG7311_POE_P2.Controllers
 
         //================================================================
 
-        [HttpGet]
-        public IActionResult CreateContract() => View();
-
-        [HttpGet]
-        public IActionResult CreateServiceRequest() => View();
+       
 
     }
 }

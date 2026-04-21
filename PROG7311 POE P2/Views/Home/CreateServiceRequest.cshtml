@@ -1,0 +1,52 @@
+﻿@model PROG7311_POE_P2.Models.ServiceRequest.ServiceRequest
+
+@{
+    ViewData["Title"] = "New Service Request";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">Log Service Request</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateServiceRequest" method="post">
+                        <div class="mb-3">
+                            <label asp-for="ContractId" class="form-label">Contract ID</label>
+                            <input asp-for="ContractId" type="number" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Describe the work required..." required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Cost" class="form-label">Estimated Cost</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R</span>
+                                <input asp-for="Cost" type="number" step="0.01" class="form-control" placeholder="0.00" required />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Status" class="form-label">Initial Status</label>
+                            <select asp-for="Status" class="form-select" required>
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-warning">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
