@@ -1,0 +1,36 @@
+﻿@model PROG7311_POE_P2.Models.ServiceRequest.ServiceRequest
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="bi bi-trash"></i> Delete Service Request</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center lead">Are you sure you want to remove this service request?</p>
+                    <div class="alert alert-light border">
+                        <div class="row">
+                            <div class="col-sm-4 fw-bold">Request ID:</div>
+                            <div class="col-sm-8">#@Model.ServiceRequestId</div>
+
+                            <div class="col-sm-4 fw-bold">Description:</div>
+                            <div class="col-sm-8">@Model.Description</div>
+
+                            <div class="col-sm-4 fw-bold">Total Cost:</div>
+                            <div class="col-sm-8 text-success">@Model.Cost.ToString("R")</div>
+                        </div>
+                    </div>
+
+                    <form asp-action="DeleteServiceRequest" method="post">
+                        <input type="hidden" asp-for="ServiceRequestId" name="id" />
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary">Go Back</a>
+                            <button type="submit" class="btn btn-danger">Delete Permanently</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

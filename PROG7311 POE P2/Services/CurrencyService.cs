@@ -7,7 +7,7 @@ public class CurrencyService
 {
 
     private readonly HttpClient _httpClient;
-    //private const string ApiKey = "f9ddef59cd5776e9128ab203";
+    private const string ApiKey = "f9ddef59cd5776e9128ab203";
 
     public CurrencyService(HttpClient httpClient)
     {
@@ -17,7 +17,7 @@ public class CurrencyService
     public async Task<decimal> ConvertUsdToZar(decimal usdAmount)
     {
         // my API key
-        string url = $"https://v6.exchangerate-api.com/v6/f9ddef59cd5776e9128ab203/pair/USD/ZAR";
+        string url = $"https://v6.exchangerate-api.com/v6/{ApiKey}/pair/USD/ZAR";
 
         try
         {

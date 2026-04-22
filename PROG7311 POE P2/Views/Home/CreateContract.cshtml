@@ -16,29 +16,37 @@
                         <div class="mb-3">
                             <label asp-for="ClientId" class="form-label">Client ID</label>
                             <input asp-for="ClientId" type="number" class="form-control" placeholder="Enter Client ID" required />
-                            <small class="text-muted">Enter the ID of the client this contract belongs to.</small>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="StartDate" class="form-label">Start Date</label>
-                            <input asp-for="StartDate" type="date" class="form-control" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="EndDate" class="form-label">End Date</label>
-                            <input asp-for="EndDate" type="date" class="form-control" required />
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="StartDate" class="form-label">Start Date</label>
+                                <input asp-for="StartDate" type="date" class="form-control" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="EndDate" class="form-label">End Date</label>
+                                <input asp-for="EndDate" type="date" class="form-control" required />
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="ServiceLevel" class="form-label">Service Level</label>
                             <select asp-for="ServiceLevel" class="form-select" required>
+                                <option value="">-- Select Level --</option>
+                                <option value="Basic">Basic</option>
+                                <option value="Premium">Premium</option>
+                                <option value="Enterprise">Enterprise</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Status" class="form-label">Status</label>
+                            <select asp-for="Status" class="form-select" required>
                                 <option value="Draft">Draft</option>
                                 <option value="Active">Active</option>
                                 <option value="Expired">Expired</option>
                             </select>
                         </div>
-
-
 
                         <div class="d-flex justify-content-between mt-4">
                             <a asp-action="Index" class="btn btn-secondary">Cancel</a>

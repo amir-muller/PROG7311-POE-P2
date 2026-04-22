@@ -126,6 +126,162 @@ namespace PROG7311_POE_P2.Controllers
         //    return View(serviceRequest);
         //}
 
+        //================================================================
+        // EDIT CLIENT
+        //================================================================
+
+        [HttpGet]
+        public IActionResult EditClient(int id)
+        {
+            var client = _context.Clients.Find(id);
+            if (client == null) return NotFound();
+            return View(client);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditClient(Client client)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Clients.Update(client);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(client);
+
+        }
+
+        //================================================================
+        // EDIT CONTRACT
+        //================================================================
+
+        [HttpGet]
+        
+        public IActionResult EditContract(int id)
+        {
+            var contract = _context.Contracts.Find(id);
+            if (contract == null) return NotFound();
+            return View(contract);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditContract(Contract contract)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Contracts.Update(contract);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(contract);
+        }
+
+        //================================================================
+        // EDIT SERVICE REQUEST
+        //================================================================
+
+        [HttpGet]
+        public IActionResult EditServiceRequest(int id)
+        {
+            var serviceRequest = _context.ServiceRequests.Find(id);
+            if (serviceRequest == null) return NotFound();
+            return View(serviceRequest);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditServiceRequest(ServiceRequest serviceRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.ServiceRequests.Update(serviceRequest);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(serviceRequest);
+        }
+
+        //================================================================
+        // DELETE CLIENT
+        //================================================================
+
+        [HttpGet]
+        public IActionResult DeleteClient(int id)
+        {
+            var client = _context.Clients.Find(id);
+            if (client == null) return NotFound();
+            return View(client);
+        }
+
+        [HttpPost, ActionName("DeleteClient")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteClientConfirmed(int id)
+        {
+            var client = _context.Clients.Find(id);
+            if (client != null)
+            {
+                _context.Clients.Remove(client);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //================================================================
+        // DELETE CONTRACT
+        //================================================================
+
+        [HttpGet]
+        public IActionResult DeleteContract(int id)
+        {
+            var contract = _context.Contracts.Find(id);
+            if (contract == null) return NotFound();
+            return View(contract);
+        }
+
+        [HttpPost, ActionName("DeleteContract")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteContractConfirmed(int id)
+        {
+            var contract = _context.Contracts.Find(id);
+            if (contract != null)
+            {
+                _context.Contracts.Remove(contract);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //================================================================
+        // DELETE SERVICE REQUEST
+        //================================================================
+
+        [HttpGet]
+        public IActionResult DeleteServiceRequest(int id)
+        {
+            var request = _context.ServiceRequests.Find(id);
+            if (request == null) return NotFound();
+            return View(request);
+        }
+
+        [HttpPost, ActionName("DeleteServiceRequest")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteServiceRequestConfirmed(int id)
+        {
+            var request = _context.ServiceRequests.Find(id);
+            if (request != null)
+            {
+                _context.ServiceRequests.Remove(request);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
 
         //================================================================

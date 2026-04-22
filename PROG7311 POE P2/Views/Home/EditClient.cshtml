@@ -1,0 +1,43 @@
+﻿@model PROG7311_POE_P2.Models.Client.Client
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Edit Client: @Model.Name</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="EditClient" method="post">
+                        <input type="hidden" asp-for="ClientId" />
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label font-weight-bold"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="contactDetails" class="form-label">Contact Details</label>
+                            <input asp-for="contactDetails" class="form-control" />
+                            <span asp-validation-for="contactDetails" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Region" class="form-label"></label>
+                            <select asp-for="Region" class="form-select">
+                                <option value="South Africa">South Africa</option>
+                                <option value="Namibia">Namibia</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-dark">Update Client</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
