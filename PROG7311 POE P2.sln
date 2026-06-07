@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROG7311 POE P2", "PROG7311
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROG7311_P2", "PROG7311_P2\PROG7311_P2.csproj", "{700A6950-CE97-477A-B281-2469FE65B941}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web_API", "Web_API\Web_API.csproj", "{8AD395B4-C6AA-4965-86E3-2BFADEEC191C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{700A6950-CE97-477A-B281-2469FE65B941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{700A6950-CE97-477A-B281-2469FE65B941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{700A6950-CE97-477A-B281-2469FE65B941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AD395B4-C6AA-4965-86E3-2BFADEEC191C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AD395B4-C6AA-4965-86E3-2BFADEEC191C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AD395B4-C6AA-4965-86E3-2BFADEEC191C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AD395B4-C6AA-4965-86E3-2BFADEEC191C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

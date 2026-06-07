@@ -1,4 +1,4 @@
-﻿namespace PROG7311_POE_P2.Models.ServiceRequest
+﻿namespace Web_API.Models.ServiceRequest
 {
     public class ServiceRequest
     {

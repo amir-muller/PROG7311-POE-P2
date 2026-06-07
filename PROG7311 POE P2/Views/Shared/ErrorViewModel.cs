@@ -1,4 +1,4 @@
-namespace PROG7311_POE_P2.Models
+namespace Web_API.Models
 {
     public class ErrorViewModel
     {

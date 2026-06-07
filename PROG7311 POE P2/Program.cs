@@ -1,25 +1,19 @@
-using Microsoft.EntityFrameworkCore;
-using PROG7311_POE_P2.Data;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connectionString));
 
-// currency service
-builder.Services.AddHttpClient<PROG7311_POE_P2.Services.CurrencyService>();
 
-// to config the application
+builder.Services.AddHttpClient("MyWebAPI", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7250/");
+});
+
 var app = builder.Build();
 
-
-// Configure the HTTP request pipeline.
+//http request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

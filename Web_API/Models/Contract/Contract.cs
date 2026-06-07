@@ -1,4 +1,4 @@
-﻿namespace PROG7311_POE_P2.Models.Contract
+﻿namespace Web_API.Models.Contract
 {
     public class Contract
     {

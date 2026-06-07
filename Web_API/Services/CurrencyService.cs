@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
 
-namespace PROG7311_POE_P2.Services;
+namespace Web_API.Services;
 
 public class CurrencyService
 {

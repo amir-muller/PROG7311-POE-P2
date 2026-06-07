@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace PROG7311_POE_P2.Models.Client
+namespace Web_API.Models.Client
 {
     public class Client
     {

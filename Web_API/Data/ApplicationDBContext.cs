@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace PROG7311_POE_P2.Data;
+namespace Web_API.Data;
 
 public class ApplicationDBContext: DbContext
 {
