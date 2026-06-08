@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+//using PROG7311_POE_P2.Models;
+using System.Diagnostics;
+using System.Net.Http.Json;
 using Web_API.Models;
 using Web_API.Models.Client;
 using Web_API.Models.Contract;
 using Web_API.Models.DashboardViewModel;
 using Web_API.Models.ServiceRequest;
-using System.Diagnostics;
-using System.Net.Http.Json;
 
 namespace PROG7311_POE_P2.Controllers
 {
@@ -51,7 +52,16 @@ namespace PROG7311_POE_P2.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error loading dashboard data: {ex.Message}");
-                return View(new DashboardViewModel());
+
+                // Return an explicit empty model structure so the webpage renders safely
+                var emptyViewModel = new DashboardViewModel
+                {
+                    Clients = new List<Client>(),
+                    Contracts = new List<Contract>(),
+                    ServiceRequests = new List<ServiceRequest>()
+                };
+
+                return View(emptyViewModel);
             }
         }
 
@@ -102,13 +112,8 @@ namespace PROG7311_POE_P2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateServiceRequest(ServiceRequest serviceRequest, decimal amountInUSD)
+        public async Task<IActionResult> CreateServiceRequest(ServiceRequest serviceRequest)
         {
-            // Note: Since your CurrencyService now resides in the API backend, 
-            // you can pass amountInUSD to a specific currency conversion endpoint on your API first,
-            // or modify your API's POST method to handle conversion automatically. 
-            // For now, let's post the request straight to your future endpoint.
-
             if (ModelState.IsValid)
             {
                 var httpClient = CreateApiClient();
@@ -126,10 +131,17 @@ namespace PROG7311_POE_P2.Controllers
         [HttpGet]
         public async Task<IActionResult> EditClient(int id)
         {
-            var httpClient = CreateApiClient();
-            var client = await httpClient.GetFromJsonAsync<Client>($"api/clients/{id}");
-            if (client == null) return NotFound();
-            return View(client);
+            try
+            {
+                var httpClient = CreateApiClient();
+                var client = await httpClient.GetFromJsonAsync<Client>($"api/clients/{id}");
+                return View(client);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Client ID {id} not found or API down: {ex.Message}");
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -155,10 +167,17 @@ namespace PROG7311_POE_P2.Controllers
         [HttpGet]
         public async Task<IActionResult> EditContract(int id)
         {
-            var httpClient = CreateApiClient();
-            var contract = await httpClient.GetFromJsonAsync<Contract>($"api/contracts/{id}");
-            if (contract == null) return NotFound();
-            return View(contract);
+            try
+            {
+                var httpClient = CreateApiClient();
+                var contract = await httpClient.GetFromJsonAsync<Contract>($"api/contracts/{id}");
+                return View(contract);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Contract ID {id} not found or API down: {ex.Message}");
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -184,10 +203,17 @@ namespace PROG7311_POE_P2.Controllers
         [HttpGet]
         public async Task<IActionResult> EditServiceRequest(int id)
         {
-            var httpClient = CreateApiClient();
-            var request = await httpClient.GetFromJsonAsync<ServiceRequest>($"api/servicerequests/{id}");
-            if (request == null) return NotFound();
-            return View(request);
+            try
+            {
+                var httpClient = CreateApiClient();
+                var request = await httpClient.GetFromJsonAsync<ServiceRequest>($"api/servicerequests/{id}");
+                return View(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Service request ID {id} not found or API down: {ex.Message}");
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -213,10 +239,17 @@ namespace PROG7311_POE_P2.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteClient(int id)
         {
-            var httpClient = CreateApiClient();
-            var client = await httpClient.GetFromJsonAsync<Client>($"api/clients/{id}");
-            if (client == null) return NotFound();
-            return View(client);
+            try
+            {
+                var httpClient = CreateApiClient();
+                var client = await httpClient.GetFromJsonAsync<Client>($"api/clients/{id}");
+                return View(client);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Client ID {id} cannot be read for deletion: {ex.Message}");
+                return NotFound();
+            }
         }
 
         [HttpPost, ActionName("DeleteClient")]
@@ -224,7 +257,11 @@ namespace PROG7311_POE_P2.Controllers
         public async Task<IActionResult> DeleteClientConfirmed(int id)
         {
             var httpClient = CreateApiClient();
-            await httpClient.DeleteAsync($"api/clients/{id}");
+            var response = await httpClient.DeleteAsync($"api/clients/{id}");
+
+            if (!response.IsSuccessStatusCode)
+                _logger.LogError($"Failed to delete client with ID: {id}");
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -234,10 +271,17 @@ namespace PROG7311_POE_P2.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteContract(int id)
         {
-            var httpClient = CreateApiClient();
-            var contract = await httpClient.GetFromJsonAsync<Contract>($"api/contracts/{id}");
-            if (contract == null) return NotFound();
-            return View(contract);
+            try
+            {
+                var httpClient = CreateApiClient();
+                var contract = await httpClient.GetFromJsonAsync<Contract>($"api/contracts/{id}");
+                return View(contract);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Contract ID {id} cannot be read for deletion: {ex.Message}");
+                return NotFound();
+            }
         }
 
         [HttpPost, ActionName("DeleteContract")]
@@ -245,7 +289,11 @@ namespace PROG7311_POE_P2.Controllers
         public async Task<IActionResult> DeleteContractConfirmed(int id)
         {
             var httpClient = CreateApiClient();
-            await httpClient.DeleteAsync($"api/contracts/{id}");
+            var response = await httpClient.DeleteAsync($"api/contracts/{id}");
+
+            if (!response.IsSuccessStatusCode)
+                _logger.LogError($"Failed to delete contract with ID: {id}");
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -255,10 +303,17 @@ namespace PROG7311_POE_P2.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteServiceRequest(int id)
         {
-            var httpClient = CreateApiClient();
-            var request = await httpClient.GetFromJsonAsync<ServiceRequest>($"api/servicerequests/{id}");
-            if (request == null) return NotFound();
-            return View(request);
+            try
+            {
+                var httpClient = CreateApiClient();
+                var request = await httpClient.GetFromJsonAsync<ServiceRequest>($"api/servicerequests/{id}");
+                return View(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Service Request ID {id} cannot be read for deletion: {ex.Message}");
+                return NotFound();
+            }
         }
 
         [HttpPost, ActionName("DeleteServiceRequest")]
@@ -266,9 +321,18 @@ namespace PROG7311_POE_P2.Controllers
         public async Task<IActionResult> DeleteServiceRequestConfirmed(int id)
         {
             var httpClient = CreateApiClient();
-            await httpClient.DeleteAsync($"api/servicerequests/{id}");
+            var response = await httpClient.DeleteAsync($"api/servicerequests/{id}");
+
+            if (!response.IsSuccessStatusCode)
+                _logger.LogError($"Failed to delete service request with ID: {id}");
+
             return RedirectToAction(nameof(Index));
         }
+
+
+
+        //================================================================
+
 
         public IActionResult Privacy() => View();
 

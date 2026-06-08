@@ -8,7 +8,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowMVCApp", policy =>
     {
-        policy.WithOrigins("https://localhost:7000")
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddHttpClient<Web_API.Services.CurrencyService>();
 
 //ApplicationDBContext
-builder.Services.AddDbContext<ApplicationDBContext>(options =>
+builder.Services.AddDbContext<Web_API.Data.ApplicationDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();

@@ -3,9 +3,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
+//get url from appsettings.json
+var apiSettings = builder.Configuration.GetSection("ApiSettings");
+var apiBaseUrl = apiSettings["BaseUrl"];
+
+//reg HttpClient
 builder.Services.AddHttpClient("MyWebAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7250/");
+    client.BaseAddress = new Uri(apiBaseUrl);
 });
 
 var app = builder.Build();
