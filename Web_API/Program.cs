@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Web_API.Data;
+using Web_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,8 @@ builder.Services.AddCors(options =>
 });
 
 //currency service
-builder.Services.AddHttpClient<Web_API.Services.CurrencyService>();
+builder.Services.AddHttpClient(); 
+builder.Services.AddScoped<CurrencyService>();
 
 //ApplicationDBContext
 builder.Services.AddDbContext<Web_API.Data.ApplicationDBContext>(options =>

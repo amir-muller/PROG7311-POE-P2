@@ -40,6 +40,16 @@ namespace PROG7311_POE_P2.Controllers
 
                 await Task.WhenAll(clientsTask, contractsTask, requestsTask);
 
+                //debugging fr
+                var rawRequests = await requestsTask ?? new List<ServiceRequest>();
+
+                foreach (var req in rawRequests)
+                {
+                    _logger.LogInformation($"[Dashboard Tracing] Request ID: {req.ServiceRequestId} | Raw Cost in Controller: {req.Cost}");
+                }
+
+                ///
+
                 var viewModel = new DashboardViewModel
                 {
                     Clients = await clientsTask ?? new List<Client>(),

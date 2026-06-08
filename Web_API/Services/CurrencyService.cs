@@ -5,56 +5,47 @@ namespace Web_API.Services;
 
 public class CurrencyService
 {
-
-    private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
     private const string ApiKey = "f9ddef59cd5776e9128ab203";
 
-    public CurrencyService(HttpClient httpClient)
+    public CurrencyService(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClient;
+        _httpClientFactory = httpClientFactory;
     }
 
     public async Task<decimal> ConvertUsdToZar(decimal usdAmount)
     {
-        // my API key
-        string url = $"https://v6.exchangerate-api.com/v6/{ApiKey}/pair/USD/ZAR";
+        string url = $"https://v6.exchangerate-api.com/v6/{ApiKey.Trim()}/pair/USD/ZAR";
 
         try
         {
-            var response = await _httpClient.GetAsync(url);
+            using var client = _httpClientFactory.CreateClient();
+
+            var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
 
+                Console.WriteLine($"API Payload Received: {json}");
+
                 using var doc = JsonDocument.Parse(json);
                 var root = doc.RootElement;
 
-                if (root.GetProperty("result").GetString() == "success")
+                if (root.TryGetProperty("result", out var resultProp) && resultProp.GetString() == "success")
                 {
-                    decimal rate = root.GetProperty("conversion_rate").GetDecimal();
-                    return usdAmount * rate;
+                    if (root.TryGetProperty("conversion_rate", out var rateProp))
+                    {
+                        decimal rate = rateProp.GetDecimal();
+                        return usdAmount * rate;
+                    }
                 }
             }
         }
         catch (Exception ex)
         {
-            // Log the exception
             Console.WriteLine($"Error fetching exchange rate: {ex.Message}");
         }
 
         return 0;
-
-        //var response = await _httpClient.GetAsync(url);
-        //if (response.IsSuccessStatusCode)
-        //{
-        //    var json = await response.Content.ReadAsStringAsync();
-        //    using var doc = JsonDocument.Parse(json);
-
-        //    decimal rate = doc.RootElement.GetProperty("conversion_rate").GetDecimal();
-
-        //    return usdAmount * rate;
     }
-
-
-
 }
