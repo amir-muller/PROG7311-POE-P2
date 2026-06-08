@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>PROG7311_POE_P2</RootNamespace>
+    <UserSecretsId>0da1612c-610d-4a87-8bf5-266c8cf1f3e9</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,16 +15,24 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Web_API\Web_API.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Web_API\Web_API.csproj">
+			<ExcludeAssets>contentFiles</ExcludeAssets>
+		</ProjectReference>
+	</ItemGroup>
 
   <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Web_API\Web_API.csproj" />
   </ItemGroup>
 
 </Project>
